@@ -16,7 +16,7 @@ import AddMovie from './pages/AddMovie';
 function App() {
   const [user, setUser] = useState({
     id: null,
-    isAdmin: false // Default to false since we can't get it from the API
+    isAdmin: false // Default to false
   });
 
   const [movies, setMovies] = useState([]);
@@ -40,16 +40,17 @@ function App() {
   }, []);
 
   function unsetUser() {
-    localStorage.clear();
+    localStorage.removeItem('token');
+    localStorage.removeItem('isAdmin'); 
     setUser({ id: null, isAdmin: false });
   }
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+    const isAdmin = localStorage.getItem("isAdmin") === 'true'; 
+
     if (token) {
-      // Assuming you might want to add logic to check if the user is admin
-      // For now, we're just setting it to false
-      setUser({ id: "authenticated", isAdmin: false }); // Placeholder, adjust as needed
+      setUser({ id: "authenticated", isAdmin: isAdmin }); 
     } else {
       setUser({ id: null, isAdmin: false });
     }
@@ -64,7 +65,6 @@ function App() {
             <Route path="/" element={<Movies />} />
             <Route path="/movies" element={<Movies />} />
             <Route path="/movies/create" element={<AddMovie />} />
-            <Route path="/admin" element={<AdminMovies movies={movies} loading={loading} />} />
             <Route path="/movies/:id" element={<MovieDetails />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />

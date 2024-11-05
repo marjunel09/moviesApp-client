@@ -37,7 +37,7 @@ function AddMovie() {
             }
 
             // Navigate back to the admin movies page after successful submission
-            navigate('/admin');
+            navigate('/movies');
         } catch (error) {
             console.error('Error adding movie:', error);
             // Optionally, handle the error state (e.g., show an error message)
